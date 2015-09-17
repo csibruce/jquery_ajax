@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#btn').click(function(){
+			
+			var name = $('#a').val();
+			var gg = $('#b').val();
+			var ee = $('#c').val();
+			var mm = $('#d').val();
+			var cc = $('#e').val();
+		//alert("name="+name+"&gg="+gg+"&ee="+ee+"&mm="+mm+"&cc="+cc);
+				$.ajax({
+					'url':'dd.jsp',
+					'type':'post',
+					'data':"name="+name+"&gg="+gg+"&ee="+ee+"&mm="+mm+"&cc="+cc,
+					'success':function(result){
+						
+						
+						$('#result').html(result);
+					},
+					'errorr':function(result){
+						alert('error')
+					},
+					'dataType':'text'
+				});
+			
+			
+		});
+	})
+</script>
+</head>
+<body>
+
+이름 : <input type="text" id="a"><br>
+국어 : <input type="text" id="b"><br>
+영어 : <input type="text" id="c"><br>
+수학 : <input type="text" id="d"><br>
+컴퓨터 : <input type="text" id="e"><br>
+<input id="btn" type="button" value="성적처리">
+<hr color="red">
+<div id="result"></div>
+
+</body>
+</html>

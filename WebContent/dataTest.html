@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#txtBtn').click(function(){
+			$.ajax({
+				'url':'textDataTest.jsp',
+				'type':'get',
+				'success':function(value){
+					var names = value.split("&");
+					var html = '<ul>';
+					$.each(names,function(index,name){
+						html+='<li>'+index+'번째 '+name+'</li>';
+					});
+					html+='</ul>';
+					$('#result').html(html);
+				},
+				'dataType':'text'
+			})
+		})
+		////////////////////////////////////////////////
+		////////////////////////////////////////////////
+		$('#jsonArrBtn').click(function(){
+			$.ajax({
+				'url':'jsonArrayTest.jsp',
+				'type':'get',
+				'success':function(value){
+					var html = '<ul>';
+					$.each(value,function(index,name){
+						html+='<li>'+name+'</li>';
+					});
+					html+='</ul>';
+					$('#result').html(html);
+				},
+				'dataType':'json'
+			})
+		})
+		////////////////////////////////////////////////
+		////////////////////////////////////////////////
+		//$.get(url, data, success, dataType)
+		//$.post(url, data, success, dataType)
+		//$.getJson(url, data, success)
+		
+		$('#jsonObjBtn').click(function(){
+			$.get(
+					'jsonObjectTest.jsp',
+					//data생략가능,
+					function(valObj){
+						var html = 'name : '+valObj.name+'<br>'+
+								   'tel : '+valObj.tel+'<br>'+
+								   'zip : '+valObj.zip+'<br>'+
+								   'addr : '+valObj.addr+'<br>';
+						$('#result').html(html);
+					},
+					'json'
+			)
+		})
+		////////////////////////////////////////////////
+		////////////////////////////////////////////////
+		$('#jsonMixBtn').click(function(){
+			$.post(
+					'jsonMixTest.jsp',
+					function(mixdata){
+						var html = '';
+						$.each(mixdata,function(index,value){
+							html+='name : '+value.name+' tel : '+value.tel+' zip :'+value.zip+' addr : '+value.addr+'<br>';
+						})
+						$('#result').html(html);
+					},
+					'json'	
+			)
+			
+			
+		})
+		////////////////////////////////////////////////
+		////////////////////////////////////////////////
+	});
+</script>
+</head>
+<body>
+	<form>
+		<input type="button" value="TextData" id="txtBtn">
+		<input type="button" value="JSONArrayData" id="jsonArrBtn">
+		<input type="button" value="JSONObjectData" id="jsonObjBtn">
+		<input type="button" value="JSONMixData" id="jsonMixBtn">
+	</form>
+	<br>
+	<hr color=red>
+	<div id="result"></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<title>Insert title here</title>
+<script type="text/javascript">
+	$(function(){
+		$('#lprodBtn').click(function(){
+		
+		$.getJSON('getLprodList.jsp',
+				   function(lprodObj){
+					if(lprodObj.state == "success"){
+					 var datas = lprodObj.data;
+					 var html = "<table>";
+					 
+					 $.each(datas, function(i,v){
+						html += "<tr>";
+						html += "<td>"+v.lprod_id+"</td>";
+						html += "<td>"+v.lprod_gu+"</td>";
+						html += "<td>"+v.lprod_nm+"</td>";
+						html += "</tr>";
+					 })
+					 html += "</table>";
+						alert(html);
+					 $('#result').html(html);
+						
+					}
+				   }
+		);			
+		});
+	});
+</script>
+</head>
+<body>
+
+<input type="button" value="lprod가져오기" id="lprodBtn">
+<br><br>
+<hr color="red">
+<div id="result"></div>
+</body>
+</html>
