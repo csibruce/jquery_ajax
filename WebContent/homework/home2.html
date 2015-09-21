@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+	
+		$.ajax({
+			'url':'getbuyernames.jsp',
+			'type':'post',
+			'success':function(result){ //result.buyer_id, result.buyer_name
+				if(result.state == "success"){
+					var datas = result.data;
+					var html = "";
+					$.each(datas,function(i,v){
+						html += "<div id='"+v.buyer_id+"'onclick='test("+v.buyer_id+")'>"+v.buyer_name+"</div>"
+					})	
+				$('#buyerNames').html(html);
+				}
+			},
+			'dataType':'json'
+		})	
+		//////////////////////////////////////////////////////////
+		
+		$('#buyerNames').on('click','div',function(){
+		//	alert($(this).attr("id"));
+			
+			
+			$.post(
+					'getbuyerinfo.jsp',	
+					{'id':$(this).attr("id")},
+					function(result){
+						//if(result.state == "success")
+						var v = result.data;
+						var html = "";
+						    html += "거래처 코드 : "+v.buyer_id+"<br>";   
+						    html += "거래처명 : "+v.buyer_name+"<br>";   
+						    html += "상품분류 : "+v.buyer_lgu+"<br>";    
+						    html += "거래은행 : "+v.buyer_bank+"<br>";   
+						    html += "은행번호 : "+v.buyer_bankno+"<br>";
+						    html += "거래은행 : "+v.buyer_bankname+"<br>";
+						    html += "우편번호 : "+v.buyer_zip+"<br>";    
+						    html += "주소1 : "+v.buyer_add1+"<br>";   
+						    html += "주소2 : "+v.buyer_add2+"<br>";   
+						    html += "회사번호 : "+v.buyer_comtel+"<br>";
+						    html += "팩스번호 : "+v.buyer_fax+"<br>";   
+						    html += "이메일 : "+v.buyer_mail+"<br>";  
+						    html += "담당자 : "+v.buyer_charger+"<br>";
+						    
+						    
+						$('#buyerInfo').html(html);
+					},
+					'json'
+			)
+			
+			
+			
+			/* $.ajax({
+				'url':'getbuyerinfo.jsp',
+				'type':'post',
+				'data':{'id':$(this).attr("id")},
+				'success':function(result){ 
+					if(result.state == "success"){
+						var datas = result.data;
+						var html = "";
+							html += datas.buyer_name;
+					$('#buyerInfo').html(html);
+					}
+				},
+				'dataType':'json'
+			})	 */
+		})
+ 		
+		/* function test(get){
+			alert("dd");
+			$.ajax({
+				'url':'getbuyerinfo.jsp',
+				'type':'post',
+				'data':'id='+get,
+				'success':function(result){ 
+					if(result.state == "success"){
+						var datas = result.data;
+						var html = "";
+						$.each(datas,function(i,v){
+							html += "<div id='"+v.buyer_id+"'onclick='test("+v.buyer_id+")'>"+v.buyer_name+"</div>"
+						})	
+					$('#buyerInfo').html(html);
+					}
+				},
+				'dataType':'json'
+			})	
+			
+		} */
+		
+	})
+	
+</script>
+<style type="text/css">
+
+#buyerNames div{ margin:10px; }
+#buyerNames div:hover{ background-color:green; cursor:pointer; }
+ 
+#buyerInfo table{ height:360px; width:590px; border:1px solid red; }
+#buyerInfo table td{ border:1px solid red; }
+#buyerInfo table td:first-child { width:200px; }
+</style>
+
+</head>
+<body>
+
+<table border="1" cellspacing="0" align="center">
+<tr align='center'>
+	<td width="150">거 래 처 이 름</td>
+	<td width="600">거 래 처 상 세 정 보</td>
+</tr>
+<tr align='center'>
+	<td id="buyerNames">&nbsp;</td>
+	<td id="buyerInfo" style="text-align:left;padding:50px;">&nbsp;</td>
+</tr>
+</table>
+
+
+</body>
+</html>

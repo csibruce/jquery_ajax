@@ -3,21 +3,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$('#btn').click(function(){
 			
-			var name = $('#a').val();
+			/* var name = $('#a').val();
 			var gg = $('#b').val();
 			var ee = $('#c').val();
 			var mm = $('#d').val();
-			var cc = $('#e').val();
+			var cc = $('#e').val(); */
+			
+		var jsonstr = $('#frm').serializeJSON();
+		console.log(jsonstr);
 		//alert("name="+name+"&gg="+gg+"&ee="+ee+"&mm="+mm+"&cc="+cc);
-				$.ajax({
+			   $.ajax({
 					'url':'dd.jsp',
 					'type':'post',
-					'data':"name="+name+"&gg="+gg+"&ee="+ee+"&mm="+mm+"&cc="+cc,
+					'data':jsonstr,
 					'success':function(result){
 						
 						
@@ -35,15 +39,15 @@
 </script>
 </head>
 <body>
-
-이름 : <input type="text" id="a"><br>
-국어 : <input type="text" id="b"><br>
-영어 : <input type="text" id="c"><br>
-수학 : <input type="text" id="d"><br>
-컴퓨터 : <input type="text" id="e"><br>
+<form id="frm">
+이름 : <input name="name" type="text" id="a"><br>
+국어 : <input name="gg" type="text" id="b"><br>
+영어 : <input name="ee" type="text" id="c"><br>
+수학 : <input name="mm" type="text" id="d"><br>
+컴퓨터 : <input name="cc" type="text" id="e"><br>
 <input id="btn" type="button" value="성적처리">
 <hr color="red">
 <div id="result"></div>
-
+</form>
 </body>
 </html>
